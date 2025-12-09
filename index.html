@@ -7,15 +7,15 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
         :root {
-            --bg-dark: #f2f2f2;           /* Light gray background like forum */
-            --card-bg: #ffffff;           /* White cards like forum */
-            --border: #e0e0e0;            /* Light gray borders */
-            --text: #333333;              /* Dark gray text */
-            --text-secondary: #666666;    /* Medium gray secondary text */
-            --accent: #0066cc;            /* Blue accent like forum */
-            --accent-green: #28a745;      /* Green for download */
-            --accent-red: #dc3545;        /* Red for locked badge */
-            --accent-orange: #ff8c00;     /* Orange for owner badge */
+            --bg-dark: #0f1419;           /* Dark background */
+            --card-bg: #1a1f26;           /* Dark card background */
+            --border: #2d3746;            /* Dark border */
+            --text: #e6edf3;              /* Light text */
+            --text-secondary: #8b949e;    /* Gray secondary text */
+            --accent: #58a6ff;            /* Blue accent */
+            --accent-green: #238636;      /* Green for download */
+            --accent-red: #da3633;        /* Red for locked badge */
+            --accent-orange: #f78166;     /* Orange for owner badge */
         }
         
         * {
@@ -31,6 +31,9 @@
             line-height: 1.6;
             padding: 20px;
             min-height: 100vh;
+            background-image: 
+                radial-gradient(circle at 25% 25%, rgba(88, 166, 255, 0.1) 0%, transparent 55%),
+                radial-gradient(circle at 75% 75%, rgba(218, 54, 51, 0.05) 0%, transparent 55%);
         }
         
         .container {
@@ -38,21 +41,40 @@
             margin: 0 auto;
         }
         
-        /* Header - White with subtle shadow like forum */
+        /* Header */
         .forum-header {
             background: var(--card-bg);
             border: 1px solid var(--border);
-            border-radius: 8px 8px 0 0;
-            padding: 20px;
+            border-radius: 12px 12px 0 0;
+            padding: 24px;
             margin-bottom: 1px;
-            box-shadow: 0 1px 3px rgba(0,0,0,0.05);
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .forum-header::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 2px;
+            background: linear-gradient(90deg, var(--accent), var(--accent-green));
         }
         
         .topic-title {
-            font-size: 24px;
+            font-size: 28px;
             font-weight: 600;
-            margin-bottom: 10px;
+            margin-bottom: 12px;
             color: var(--text);
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        
+        .topic-title::before {
+            content: '📌';
+            font-size: 20px;
         }
         
         .topic-meta {
@@ -64,63 +86,108 @@
         }
         
         .badge {
-            padding: 3px 8px;
-            border-radius: 4px;
+            padding: 4px 10px;
+            border-radius: 20px;
             font-size: 12px;
             font-weight: 500;
             display: inline-flex;
             align-items: center;
             gap: 5px;
+            transition: transform 0.2s;
+        }
+        
+        .badge:hover {
+            transform: translateY(-1px);
         }
         
         .badge-pinned {
-            background: #e8f4ff;          /* Very light blue */
+            background: rgba(88, 166, 255, 0.15);
             color: var(--accent);
-            border: 1px solid #cce5ff;
+            border: 1px solid rgba(88, 166, 255, 0.3);
+            backdrop-filter: blur(10px);
         }
         
         .badge-locked {
-            background: #ffeaea;          /* Very light red */
+            background: rgba(218, 54, 51, 0.15);
             color: var(--accent-red);
-            border: 1px solid #ffcccc;
+            border: 1px solid rgba(218, 54, 51, 0.3);
+            backdrop-filter: blur(10px);
         }
         
-        /* Main Content - White card */
+        /* Main Content */
         .forum-content {
             display: flex;
             background: var(--card-bg);
             border: 1px solid var(--border);
-            border-radius: 0 0 8px 8px;
+            border-radius: 0 0 12px 12px;
             overflow: hidden;
-            box-shadow: 0 1px 3px rgba(0,0,0,0.05);
+            position: relative;
+            min-height: 600px;
         }
         
-        /* Sidebar - Light gray background like forum */
+        .forum-content::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 240px;
+            bottom: 0;
+            width: 1px;
+            background: var(--border);
+        }
+        
+        /* Sidebar */
         .user-sidebar {
             width: 240px;
-            padding: 20px;
-            border-right: 1px solid var(--border);
-            background: #fafafa;          /* Very light gray sidebar */
+            padding: 24px;
+            background: rgba(26, 31, 38, 0.8);
+            backdrop-filter: blur(10px);
+            position: relative;
+            z-index: 1;
+        }
+        
+        .user-sidebar::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            right: 0;
+            bottom: 0;
+            width: 1px;
+            background: linear-gradient(to bottom, transparent, var(--border), transparent);
         }
         
         .user-card {
             text-align: center;
+            position: sticky;
+            top: 24px;
         }
         
         .user-avatar {
-            width: 70px;
-            height: 70px;
+            width: 80px;
+            height: 80px;
             border-radius: 50%;
-            margin: 0 auto 12px;
-            border: 2px solid var(--border);
+            margin: 0 auto 16px;
+            border: 3px solid var(--accent);
             background-image: url('https://forum.ezz.lol/assets/uploads/profile/uid-1/1-profileavatar-1687183969650.jpeg');
             background-size: cover;
             background-position: center;
-            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .user-avatar::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            border-radius: 50%;
+            box-shadow: inset 0 0 20px rgba(0, 0, 0, 0.3);
         }
         
         .user-name {
-            font-size: 16px;
+            font-size: 18px;
             font-weight: 600;
             margin-bottom: 4px;
             color: var(--text);
@@ -128,63 +195,89 @@
         
         .user-role {
             color: var(--accent-orange);
-            font-size: 13px;
+            font-size: 14px;
             font-weight: 500;
-            margin-bottom: 8px;
-            background: #fff3e0;
-            padding: 2px 8px;
-            border-radius: 10px;
+            margin-bottom: 12px;
+            background: rgba(247, 129, 102, 0.1);
+            padding: 4px 12px;
+            border-radius: 12px;
             display: inline-block;
+            border: 1px solid rgba(247, 129, 102, 0.2);
         }
         
         .user-status {
             display: inline-flex;
             align-items: center;
-            gap: 6px;
-            font-size: 12px;
+            gap: 8px;
+            font-size: 13px;
             color: var(--text-secondary);
-            background: #f5f5f5;
-            padding: 3px 10px;
-            border-radius: 12px;
+            background: rgba(139, 148, 158, 0.1);
+            padding: 6px 14px;
+            border-radius: 20px;
+            border: 1px solid rgba(139, 148, 158, 0.2);
         }
         
         .status-offline {
-            color: #999;
+            color: #f85149;
         }
         
         .status-offline::before {
             content: "";
-            width: 6px;
-            height: 6px;
-            background: #999;
+            width: 8px;
+            height: 8px;
+            background: #f85149;
             border-radius: 50%;
+            box-shadow: 0 0 8px #f85149;
         }
         
         /* Post Content */
         .post-content {
             flex: 1;
-            padding: 20px;
+            padding: 24px;
+            background: linear-gradient(135deg, rgba(26, 31, 38, 0.9) 0%, rgba(15, 20, 25, 0.9) 100%);
         }
         
         .post-header {
-            padding-bottom: 16px;
+            padding-bottom: 20px;
             border-bottom: 1px solid var(--border);
-            margin-bottom: 20px;
+            margin-bottom: 24px;
+            position: relative;
+        }
+        
+        .post-header::after {
+            content: '';
+            position: absolute;
+            bottom: -1px;
+            left: 0;
+            width: 100px;
+            height: 2px;
+            background: linear-gradient(90deg, var(--accent), transparent);
         }
         
         .post-meta {
             color: var(--text-secondary);
             font-size: 14px;
             margin-bottom: 8px;
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
         }
         
         .post-title {
-            font-size: 22px;
+            font-size: 24px;
             font-weight: 600;
             margin-bottom: 16px;
             color: var(--text);
-            padding-bottom: 8px;
-            border-bottom: 1px solid var(--border);
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        
+        .post-title::before {
+            content: '#1';
+            color: var(--accent);
+            font-size: 20px;
+            opacity: 0.8;
         }
         
         .post-body {
@@ -192,22 +285,35 @@
         }
         
         .post-body h2 {
-            font-size: 19px;
-            margin: 24px 0 16px;
+            font-size: 20px;
+            margin: 32px 0 20px;
             color: var(--text);
-            padding-bottom: 8px;
-            border-bottom: 1px solid #eee;
+            padding-bottom: 12px;
+            border-bottom: 2px solid var(--border);
+            position: relative;
+        }
+        
+        .post-body h2::after {
+            content: '';
+            position: absolute;
+            bottom: -2px;
+            left: 0;
+            width: 60px;
+            height: 2px;
+            background: linear-gradient(90deg, var(--accent), transparent);
         }
         
         .post-body h3 {
-            font-size: 16px;
-            margin: 20px 0 12px;
+            font-size: 17px;
+            margin: 28px 0 16px;
             color: var(--text);
+            padding-left: 12px;
+            border-left: 3px solid var(--accent);
         }
         
         .post-body h4 {
             font-size: 15px;
-            margin: 16px 0 8px;
+            margin: 24px 0 12px;
             color: var(--text);
             font-weight: 600;
         }
@@ -217,97 +323,167 @@
         }
         
         .post-body ul, .post-body ol {
-            margin: 0 0 16px 20px;
+            margin: 0 0 20px 24px;
         }
         
         .post-body li {
-            margin-bottom: 8px;
+            margin-bottom: 10px;
+            position: relative;
+            padding-left: 8px;
+        }
+        
+        .post-body li::before {
+            content: '•';
+            color: var(--accent);
+            position: absolute;
+            left: -12px;
         }
         
         .post-body a {
             color: var(--accent);
             text-decoration: none;
+            position: relative;
+            padding-bottom: 1px;
         }
         
-        .post-body a:hover {
-            text-decoration: underline;
+        .post-body a::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 0;
+            height: 1px;
+            background: var(--accent);
+            transition: width 0.3s;
+        }
+        
+        .post-body a:hover::after {
+            width: 100%;
         }
         
         .note-box {
-            background: #f0f9ff;          /* Very light blue */
-            border: 1px solid #cce5ff;
+            background: rgba(88, 166, 255, 0.1);
+            border: 1px solid rgba(88, 166, 255, 0.2);
             border-left: 4px solid var(--accent);
-            padding: 16px;
-            border-radius: 6px;
-            margin: 20px 0;
+            padding: 20px;
+            border-radius: 8px;
+            margin: 24px 0;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .note-box::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 1px;
+            background: linear-gradient(90deg, transparent, var(--accent), transparent);
         }
         
         .warning-box {
-            background: #fff3e0;          /* Very light orange */
-            border: 1px solid #ffe0b2;
-            border-left: 4px solid var(--accent-orange);
-            padding: 16px;
-            border-radius: 6px;
-            margin: 20px 0;
+            background: rgba(218, 54, 51, 0.1);
+            border: 1px solid rgba(218, 54, 51, 0.2);
+            border-left: 4px solid var(--accent-red);
+            padding: 20px;
+            border-radius: 8px;
+            margin: 24px 0;
         }
         
         .code-block {
-            background: #f8f9fa;
+            background: rgba(0, 0, 0, 0.3);
             border: 1px solid var(--border);
-            border-radius: 6px;
-            padding: 16px;
-            font-family: 'Courier New', monospace;
+            border-radius: 8px;
+            padding: 20px;
+            font-family: 'JetBrains Mono', 'Cascadia Code', 'Courier New', monospace;
             font-size: 14px;
-            margin: 16px 0;
+            margin: 20px 0;
             overflow-x: auto;
             white-space: pre-wrap;
-            color: #333;
+            color: #c9d1d9;
+            line-height: 1.5;
+            position: relative;
+        }
+        
+        .code-block::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 1px;
+            background: linear-gradient(90deg, var(--accent), transparent);
         }
         
         .download-section {
-            background: #e8f5e9;          /* Very light green */
-            border: 1px solid #c8e6c9;
-            border-radius: 6px;
-            padding: 20px;
-            margin: 30px 0;
+            background: linear-gradient(135deg, rgba(35, 134, 54, 0.15) 0%, rgba(35, 134, 54, 0.05) 100%);
+            border: 1px solid rgba(35, 134, 54, 0.3);
+            border-radius: 12px;
+            padding: 24px;
+            margin: 32px 0;
+            position: relative;
+            overflow: hidden;
+            border-left: 4px solid var(--accent-green);
+        }
+        
+        .download-section::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 1px;
+            background: linear-gradient(90deg, transparent, var(--accent-green), transparent);
         }
         
         .download-title {
             display: flex;
             align-items: center;
-            gap: 10px;
+            gap: 12px;
             font-size: 18px;
             font-weight: 600;
             margin-bottom: 16px;
-            color: var(--accent-green);
+            color: #3fb950;
         }
         
         .download-button {
             display: inline-flex;
             align-items: center;
-            gap: 10px;
-            background: var(--accent-green);
+            gap: 12px;
+            background: linear-gradient(135deg, var(--accent-green) 0%, #2ea043 100%);
             color: white;
-            padding: 10px 20px;
-            border-radius: 6px;
+            padding: 14px 28px;
+            border-radius: 8px;
             font-weight: 500;
             text-decoration: none;
-            transition: background 0.2s;
-            margin-top: 12px;
+            transition: all 0.3s;
+            margin-top: 16px;
             border: none;
             cursor: pointer;
+            box-shadow: 0 4px 12px rgba(35, 134, 54, 0.3);
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .download-button::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
+            transition: left 0.5s;
+        }
+        
+        .download-button:hover::before {
+            left: 100%;
         }
         
         .download-button:hover {
-            background: #218838;
-            text-decoration: none;
-        }
-        
-        /* Forum-like separators */
-        .separator {
-            height: 1px;
-            background: var(--border);
-            margin: 20px 0;
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(35, 134, 54, 0.4);
         }
         
         /* Responsive */
@@ -316,18 +492,26 @@
                 flex-direction: column;
             }
             
+            .forum-content::before {
+                display: none;
+            }
+            
             .user-sidebar {
                 width: 100%;
                 border-right: none;
                 border-bottom: 1px solid var(--border);
-                padding-bottom: 20px;
-                margin-bottom: 20px;
+                padding-bottom: 24px;
+                margin-bottom: 0;
+            }
+            
+            .user-sidebar::after {
+                display: none;
             }
             
             .user-card {
                 display: flex;
                 align-items: center;
-                gap: 20px;
+                gap: 24px;
                 text-align: left;
             }
             
@@ -335,6 +519,10 @@
                 margin: 0;
                 width: 60px;
                 height: 60px;
+            }
+            
+            .post-title::before {
+                display: none;
             }
         }
     </style>
@@ -381,7 +569,7 @@
                         <span> • </span>
                         <span>last edited by Skwll Oct 30, 2024, 10:01 AM</span>
                     </div>
-                    <h2 class="post-title">#1 BO3 - Ezz Setup Tutorial</h2>
+                    <h2 class="post-title">BO3 - Ezz Setup Tutorial</h2>
                 </div>
                 
                 <div class="post-body">
@@ -500,18 +688,29 @@ Version: 1.5.3 • Updated: 2024-01-15</div>
                 });
             }
             
-            // Add view counter animation
+            // Add subtle hover effects to badges
+            const badges = document.querySelectorAll('.badge');
+            badges.forEach(badge => {
+                badge.addEventListener('mouseenter', () => {
+                    badge.style.transform = 'translateY(-2px)';
+                });
+                badge.addEventListener('mouseleave', () => {
+                    badge.style.transform = 'translateY(0)';
+                });
+            });
+            
+            // Animate view counter
             const viewsElement = document.querySelector('.topic-meta span:nth-child(5)');
             if (viewsElement) {
                 let views = 165200;
-                const increment = 10;
+                const increment = 15;
                 const interval = setInterval(() => {
                     views += increment;
                     viewsElement.innerHTML = `<i class="far fa-eye"></i> ${views.toLocaleString()} Views`;
                     if (views >= 165230) {
                         clearInterval(interval);
                     }
-                }, 100);
+                }, 80);
             }
         });
     </script>
