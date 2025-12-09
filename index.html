@@ -1,0 +1,490 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>BO3 Guide - Ezz Setup</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        :root {
+            --bg-dark: #0f1419;
+            --card-bg: #1a1f26;
+            --border: #2d3746;
+            --text: #e6edf3;
+            --text-secondary: #8b949e;
+            --accent: #58a6ff;
+            --accent-green: #238636;
+            --accent-red: #da3633;
+            --accent-orange: #f78166;
+        }
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            background: var(--bg-dark);
+            color: var(--text);
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, sans-serif;
+            line-height: 1.6;
+            padding: 20px;
+            min-height: 100vh;
+        }
+        
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+        
+        /* Header */
+        .forum-header {
+            background: var(--card-bg);
+            border: 1px solid var(--border);
+            border-radius: 12px 12px 0 0;
+            padding: 24px;
+            margin-bottom: 1px;
+        }
+        
+        .topic-title {
+            font-size: 28px;
+            font-weight: 600;
+            margin-bottom: 12px;
+            color: var(--text);
+        }
+        
+        .topic-meta {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 12px;
+            font-size: 14px;
+            color: var(--text-secondary);
+        }
+        
+        .badge {
+            padding: 4px 10px;
+            border-radius: 20px;
+            font-size: 12px;
+            font-weight: 500;
+            display: inline-flex;
+            align-items: center;
+            gap: 5px;
+        }
+        
+        .badge-pinned {
+            background: rgba(88, 166, 255, 0.1);
+            color: var(--accent);
+            border: 1px solid rgba(88, 166, 255, 0.3);
+        }
+        
+        .badge-locked {
+            background: rgba(218, 54, 51, 0.1);
+            color: var(--accent-red);
+            border: 1px solid rgba(218, 54, 51, 0.3);
+        }
+        
+        /* Main Content */
+        .forum-content {
+            display: flex;
+            background: var(--card-bg);
+            border: 1px solid var(--border);
+            border-radius: 0 0 12px 12px;
+            overflow: hidden;
+        }
+        
+        /* Sidebar - User Info */
+        .user-sidebar {
+            width: 240px;
+            padding: 24px;
+            border-right: 1px solid var(--border);
+            background: rgba(26, 31, 38, 0.8);
+        }
+        
+        .user-card {
+            text-align: center;
+        }
+        
+        .user-avatar {
+            width: 80px;
+            height: 80px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            border-radius: 50%;
+            margin: 0 auto 16px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 32px;
+            font-weight: bold;
+            color: white;
+            border: 3px solid var(--border);
+        }
+        
+        .user-name {
+            font-size: 18px;
+            font-weight: 600;
+            margin-bottom: 4px;
+        }
+        
+        .user-role {
+            color: var(--accent-orange);
+            font-size: 14px;
+            font-weight: 500;
+            margin-bottom: 8px;
+        }
+        
+        .user-status {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            font-size: 13px;
+            color: var(--text-secondary);
+            background: rgba(139, 148, 158, 0.1);
+            padding: 4px 12px;
+            border-radius: 20px;
+        }
+        
+        .status-offline {
+            color: var(--accent-red);
+        }
+        
+        .status-offline::before {
+            content: "";
+            width: 8px;
+            height: 8px;
+            background: var(--accent-red);
+            border-radius: 50%;
+        }
+        
+        /* Post Content */
+        .post-content {
+            flex: 1;
+            padding: 24px;
+        }
+        
+        .post-header {
+            padding-bottom: 20px;
+            border-bottom: 1px solid var(--border);
+            margin-bottom: 24px;
+        }
+        
+        .post-meta {
+            color: var(--text-secondary);
+            font-size: 14px;
+            margin-bottom: 8px;
+        }
+        
+        .post-title {
+            font-size: 24px;
+            font-weight: 600;
+            margin-bottom: 16px;
+            color: var(--text);
+        }
+        
+        .post-body {
+            font-size: 15px;
+        }
+        
+        .post-body h2 {
+            font-size: 20px;
+            margin: 24px 0 16px;
+            color: var(--text);
+            padding-bottom: 8px;
+            border-bottom: 1px solid var(--border);
+        }
+        
+        .post-body h3 {
+            font-size: 17px;
+            margin: 20px 0 12px;
+            color: var(--text);
+        }
+        
+        .post-body h4 {
+            font-size: 15px;
+            margin: 16px 0 8px;
+            color: var(--text);
+        }
+        
+        .post-body p {
+            margin-bottom: 16px;
+        }
+        
+        .post-body ul, .post-body ol {
+            margin: 0 0 16px 20px;
+        }
+        
+        .post-body li {
+            margin-bottom: 8px;
+        }
+        
+        .post-body a {
+            color: var(--accent);
+            text-decoration: none;
+        }
+        
+        .post-body a:hover {
+            text-decoration: underline;
+        }
+        
+        .note-box {
+            background: rgba(88, 166, 255, 0.1);
+            border: 1px solid rgba(88, 166, 255, 0.3);
+            border-left: 4px solid var(--accent);
+            padding: 16px;
+            border-radius: 6px;
+            margin: 20px 0;
+        }
+        
+        .warning-box {
+            background: rgba(218, 54, 51, 0.1);
+            border: 1px solid rgba(218, 54, 51, 0.3);
+            border-left: 4px solid var(--accent-red);
+            padding: 16px;
+            border-radius: 6px;
+            margin: 20px 0;
+        }
+        
+        .code-block {
+            background: rgba(0, 0, 0, 0.3);
+            border: 1px solid var(--border);
+            border-radius: 6px;
+            padding: 16px;
+            font-family: 'Courier New', monospace;
+            font-size: 14px;
+            margin: 16px 0;
+            overflow-x: auto;
+            white-space: pre-wrap;
+        }
+        
+        /* File Download Section */
+        .download-section {
+            background: rgba(35, 134, 54, 0.1);
+            border: 1px solid rgba(35, 134, 54, 0.3);
+            border-radius: 8px;
+            padding: 20px;
+            margin: 30px 0;
+        }
+        
+        .download-title {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            font-size: 18px;
+            font-weight: 600;
+            margin-bottom: 16px;
+            color: #3fb950;
+        }
+        
+        .download-button {
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+            background: var(--accent-green);
+            color: white;
+            padding: 12px 24px;
+            border-radius: 6px;
+            font-weight: 500;
+            text-decoration: none;
+            transition: background 0.2s;
+            margin-top: 12px;
+        }
+        
+        .download-button:hover {
+            background: #2ea043;
+            text-decoration: none;
+        }
+        
+        /* Responsive */
+        @media (max-width: 768px) {
+            .forum-content {
+                flex-direction: column;
+            }
+            
+            .user-sidebar {
+                width: 100%;
+                border-right: none;
+                border-bottom: 1px solid var(--border);
+            }
+            
+            .user-card {
+                display: flex;
+                align-items: center;
+                gap: 20px;
+                text-align: left;
+            }
+            
+            .user-avatar {
+                margin: 0;
+                width: 60px;
+                height: 60px;
+                font-size: 24px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <!-- Forum Header -->
+        <div class="forum-header">
+            <h1 class="topic-title">BO3 Guide</h1>
+            <div class="topic-meta">
+                <span class="badge badge-pinned">
+                    <i class="fas fa-thumbtack"></i> Pinned
+                </span>
+                <span class="badge badge-locked">
+                    <i class="fas fa-lock"></i> Locked
+                </span>
+                <span>BOIII</span>
+                <span><i class="far fa-comment"></i> 1 Post</span>
+                <span><i class="fas fa-user"></i> 1 Poster</span>
+                <span><i class="far fa-eye"></i> 165.2k Views</span>
+                <span><i class="fas fa-user"></i> 6 Watching</span>
+            </div>
+        </div>
+        
+        <!-- Main Content -->
+        <div class="forum-content">
+            <!-- User Sidebar -->
+            <div class="user-sidebar">
+                <div class="user-card">
+                    <div class="user-avatar">S</div>
+                    <div>
+                        <div class="user-name">Skwll</div>
+                        <div class="user-role">Owner</div>
+                        <div class="user-status status-offline">Offline</div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Post Content -->
+            <div class="post-content">
+                <div class="post-header">
+                    <div class="post-meta">
+                        <span>wrote on Jun 19, 2023, 5:02 PM</span>
+                        <span> • </span>
+                        <span>last edited by Skwll Oct 30, 2024, 10:01 AM</span>
+                    </div>
+                    <h2 class="post-title">#1 BO3 - Ezz Setup Tutorial</h2>
+                </div>
+                
+                <div class="post-body">
+                    <p>Welcome to this easy guide for setting up Black Ops 3 (BO3) with the latest BOIII.exe from Ezz.</p>
+                    <p>This tutorial works both with the steam version and the torrent version of BO3.</p>
+                    
+                    <div class="note-box">
+                        <p><strong>If you already own the game on Steam</strong>, skip the first few steps and proceed from step 4.</p>
+                        <p><em>FitGirl Repacks are not supported by default, needs some extra work</em></p>
+                        <p>Support Server: <a href="https://discord.gg/ezz" target="_blank">https://discord.gg/ezz</a></p>
+                    </div>
+                    
+                    <h3>Prerequisites</h3>
+                    <ul>
+                        <li>BO3 Torrent file</li>
+                        <li>Latest Ezz Boiii.exe</li>
+                    </ul>
+                    
+                    <p>Alternative Game downloads:</p>
+                    <ul>
+                        <li>GoFile</li>
+                        <li>GDrive</li>
+                    </ul>
+                    
+                    <!-- FILE DOWNLOAD SECTION -->
+                    <div class="download-section">
+                        <div class="download-title">
+                            <i class="fas fa-download"></i>
+                            <span>Download Latest Ezz Boiii.exe</span>
+                        </div>
+                        <p>The latest version of the BOIII executable. Place this in your BlackOps3 game folder.</p>
+                        <div class="code-block">SHA-256: a1b2c3d4e5f67890123456789abcdef0123456789abcdef0123456789abcdef
+File Size: 15.7 MB
+Version: 1.5.3 • Updated: 2024-01-15</div>
+                        <a href="Latest Ezz Boiii.exe" class="download-button" download>
+                            <i class="fas fa-download"></i>
+                            Download Latest Ezz Boiii.exe
+                        </a>
+                    </div>
+                    
+                    <h3>Setup Guide</h3>
+                    
+                    <h4>1. Download the BO3 Torrent file</h4>
+                    <p>Click on the provided link to download the BO3 Torrent file. This file contains all the necessary data for the game.</p>
+                    <p><em>OR download the game from the OneDrive link above & skip step 3</em></p>
+                    
+                    <h4>2. Download the files</h4>
+                    <p>After downloading the torrent file, you'll need to download the actual game files. You can use a torrent client like qbittorrent for this process.</p>
+                    <div class="code-block">• Download and install qbittorrent from here if you haven't done so already.
+• Open qbittorrent, then go to "File" → "Add Torrent File..." and select the torrent file you downloaded in step 1.
+• Choose a location on your hard drive where you'd like to save the game files and start the download.</div>
+                    
+                    <h4>3. Download the latest Ezz BOIII.exe</h4>
+                    <p>Now, you'll need to download the latest ezz Boiii.exe from the GitHub repository here.</p>
+                    <div class="code-block">• Click on the link and then click on the "Assets" section below the latest release notes. Download the "boiii.exe" file.
+• The downloaded "boiii.exe" file should be placed in the same folder where your BlackOps3.exe is located. This is crucial for the game to work correctly.</div>
+                    
+                    <h4>4. Enjoy Black Ops 3</h4>
+                    <p>You're all set! You can now enjoy playing Black Ops 3.</p>
+                    
+                    <div class="warning-box">
+                        <h4>Additional Information</h4>
+                        <ul>
+                            <li>Check our GitHub repository for updates. (or give it a star)</li>
+                            <li>You can change your username in <code>C:\Users\YourUsernameHere\AppData\Local\boiii\user\properties.json</code></li>
+                        </ul>
+                    </div>
+                    
+                    <h3>Helpful Resources</h3>
+                    <ul>
+                        <li><a href="#">New version of BlackOps3.exe</a> - needed for non-Steam/non-Ezz downloads</li>
+                        <li><a href="#">F.A.Q Guide for BOIII</a></li>
+                        <li><a href="#">Custom Maps Install guide for Torrent (BO3)</a></li>
+                        <li><a href="#">All Plutonium Torrents</a></li>
+                        <li><a href="#">All Xlabs Torrents</a></li>
+                        <li><a href="#">BO3 Tool</a> - remove game modes you don't need</li>
+                    </ul>
+                    
+                    <h4>For Server Hosting:</h4>
+                    <ul>
+                        <li>All ZM-related zone-fastfiles</li>
+                        <li>Install Script</li>
+                        <li>Pre-Configured Folder - If you don't know, use this</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <script>
+        // Add last updated timestamp
+        document.addEventListener('DOMContentLoaded', function() {
+            const now = new Date();
+            const options = { 
+                year: 'numeric', 
+                month: 'long', 
+                day: 'numeric',
+                hour: '2-digit',
+                minute: '2-digit'
+            };
+            const lastUpdated = document.createElement('div');
+            lastUpdated.className = 'post-meta';
+            lastUpdated.style.marginTop = '30px';
+            lastUpdated.style.paddingTop = '20px';
+            lastUpdated.style.borderTop = '1px solid var(--border)';
+            lastUpdated.innerHTML = `<i class="far fa-clock"></i> Page last updated: ${now.toLocaleDateString('en-US', options)}`;
+            
+            const postBody = document.querySelector('.post-body');
+            if (postBody) {
+                postBody.appendChild(lastUpdated);
+            }
+            
+            // Add file download tracking
+            const downloadBtn = document.querySelector('.download-button');
+            if (downloadBtn) {
+                downloadBtn.addEventListener('click', function() {
+                    alert('Starting download of Latest Ezz Boiii.exe...\n\nIf download doesn\'t start automatically, right-click and select "Save link as..."');
+                });
+            }
+        });
+    </script>
+</body>
+</html>
