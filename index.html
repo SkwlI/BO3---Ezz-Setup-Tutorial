@@ -161,18 +161,46 @@
             top: 24px;
         }
         
-        .user-avatar {
-            width: 80px;
-            height: 80px;
-            border-radius: 50%;
+        .avatar-container {
+            position: relative;
+            width: 90px;
+            height: 90px;
             margin: 0 auto 16px;
+        }
+        
+        .user-avatar {
+            width: 100%;
+            height: 100%;
+            border-radius: 50%;
             border: 3px solid var(--accent);
             background-image: url('https://forum.ezz.lol/assets/uploads/profile/uid-1/1-profileavatar-1687183969650.jpeg');
-            background-size: cover;
-            background-position: center;
-            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+            background-size: 130% auto; /* Crop and zoom into center */
+            background-position: center center;
+            background-repeat: no-repeat;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.4);
             position: relative;
             overflow: hidden;
+            display: block;
+        }
+        
+        /* Fallback if image doesn't load */
+        .user-avatar::before {
+            content: 'S';
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            font-size: 36px;
+            font-weight: bold;
+            color: white;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            width: 100%;
+            height: 100%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 50%;
+            z-index: -1;
         }
         
         .user-avatar::after {
@@ -183,7 +211,29 @@
             right: 0;
             bottom: 0;
             border-radius: 50%;
-            box-shadow: inset 0 0 20px rgba(0, 0, 0, 0.3);
+            box-shadow: inset 0 0 20px rgba(0, 0, 0, 0.5);
+            pointer-events: none;
+        }
+        
+        /* Avatar status ring */
+        .avatar-container::before {
+            content: '';
+            position: absolute;
+            top: -4px;
+            left: -4px;
+            right: -4px;
+            bottom: -4px;
+            border-radius: 50%;
+            background: linear-gradient(45deg, var(--accent), var(--accent-green), var(--accent));
+            z-index: -1;
+            opacity: 0.3;
+            animation: pulse-ring 2s infinite;
+        }
+        
+        @keyframes pulse-ring {
+            0% { opacity: 0.3; }
+            50% { opacity: 0.5; }
+            100% { opacity: 0.3; }
         }
         
         .user-name {
@@ -515,10 +565,10 @@
                 text-align: left;
             }
             
-            .user-avatar {
+            .avatar-container {
                 margin: 0;
-                width: 60px;
-                height: 60px;
+                width: 70px;
+                height: 70px;
             }
             
             .post-title::before {
@@ -552,7 +602,9 @@
             <!-- User Sidebar -->
             <div class="user-sidebar">
                 <div class="user-card">
-                    <div class="user-avatar"></div>
+                    <div class="avatar-container">
+                        <div class="user-avatar"></div>
+                    </div>
                     <div>
                         <div class="user-name">Skwll</div>
                         <div class="user-role">Owner</div>
@@ -711,6 +763,31 @@ Version: 1.5.3 • Updated: 2024-01-15</div>
                         clearInterval(interval);
                     }
                 }, 80);
+            }
+            
+            // Check if avatar loaded successfully
+            const avatar = document.querySelector('.user-avatar');
+            if (avatar) {
+                const img = new Image();
+                img.src = 'https://forum.ezz.lol/assets/uploads/profile/uid-1/1-profileavatar-1687183969650.jpeg';
+                img.onload = function() {
+                    console.log('Avatar loaded successfully');
+                    // Image loaded - ensure it displays
+                    avatar.style.backgroundSize = 'cover';
+                    avatar.style.backgroundPosition = 'center center';
+                };
+                img.onerror = function() {
+                    console.log('Avatar failed to load, using fallback');
+                    // Show the 'S' fallback
+                    avatar.style.background = 'linear-gradient(135deg, #667eea 0%, #764ba2 100%)';
+                    avatar.style.display = 'flex';
+                    avatar.style.alignItems = 'center';
+                    avatar.style.justifyContent = 'center';
+                    avatar.style.color = 'white';
+                    avatar.style.fontSize = '36px';
+                    avatar.style.fontWeight = 'bold';
+                    avatar.innerHTML = 'S';
+                };
             }
         });
     </script>
